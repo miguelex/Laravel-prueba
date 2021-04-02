@@ -59,14 +59,25 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    // Método que recupera las entradas del historial del empleado
+    public function historial ()
+    {
+        return $this->hasMany(Historial::class);
+    }
+
     public function adminlte_image()
     {
+        /**
+         * TODO Hay que trabajar la iamgen asociada al perfil
+         */
         return 'https://picsum.photos/300/300';
     }
 
     public function adminlte_desc()
     {
+        /**
+         * TODO Hay que que recoger el rol del usuario
+         */
         return 'Administrador';
     }
-
 }

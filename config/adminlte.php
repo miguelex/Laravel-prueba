@@ -15,7 +15,7 @@ return [
     */
 
     'title' => '',
-    'title_prefix' => 'TFG - Reconocedor | ',
+    'title_prefix' => 'Reconocedor |',
     'title_postfix' => '',
 
     /*
@@ -50,7 +50,7 @@ return [
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'TFG Reconocedor',
+    'logo_img_alt' => 'Reconocedor TFG',
 
     /*
     |--------------------------------------------------------------------------
@@ -102,9 +102,9 @@ return [
     */
 
     'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
+    'classes_auth_header' => 'bg-gradient-primary',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'text-center',
     'classes_auth_icon' => '',
     'classes_auth_btn' => 'btn-flat btn-primary',
 
@@ -225,7 +225,7 @@ return [
 
     'menu' => [
         [
-            'text' => 'Busqueda',
+            'text' => 'search',
             'search' => true,
             'topnav' => true,
         ],

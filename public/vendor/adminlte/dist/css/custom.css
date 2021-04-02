@@ -1,0 +1,10 @@
+.login-logo a
+{
+  color: #ffffff !important;
+}
+
+.login-page
+{
+  background: url("../img/login.png") no-repeat center center fixed !important;
+  background-size: cover i !important;
+}
