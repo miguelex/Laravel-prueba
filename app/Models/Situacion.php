@@ -9,6 +9,8 @@ class Situacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'situaciones';
+
     // Método que recupera la situación del empelado
 
     public function empleados ()

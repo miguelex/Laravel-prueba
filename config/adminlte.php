@@ -230,16 +230,79 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Dashboard',
+            'route'  => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt fa-fw',
+        ],
+        ['header' => 'USUARIOS'],
+        [
+            'text' => 'Lista de usuarios',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-users fa-fw',
+            'can' => 'admin.user.index',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text' => 'Añadir usuario',
+            'route'  => 'dashboard',
+            'icon' => 'fas fa-user-plus fa-fw',
+            'can' => 'admin.user.create',
+        ],
+        ['header' => 'ROLES/PERMISOS'],
+        [
+            'text' => 'Lista de roles',
+            'route'  => 'admin.roles.index',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.role.index',
+        ],
+        [
+            'text' => 'Añadir roles',
+            'route'  => 'admin.roles.create',
+            'icon' => 'fas fa-user-tag fa-fw',
+            'can' => 'admin.role.create',
+        ],
+        [
+            'text' => 'Lista de permisos',
+            'route'  => 'dashboard',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.permission.index',
+        ],
+        [
+            'text' => 'Añadir permiso',
+            'route'  => 'dashboard',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.permission.create',
+        ],
+        ['header' => 'EMPLEADOS'],
+        [
+            'text' => 'Lista de empleados',
+            'route'  => 'admin.roles.index',
+            'icon' => 'fas fa-user-tie fa-fw',
+            'can' => 'admin.empleados.index',
+        ],
+        [
+            'text' => 'Añadir Empleado',
+            'route'  => 'admin.roles.create',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.empleados.create',
+        ],
+        ['header' => 'ADMINISTRACIÓN'],
+        [
+            'text' => 'Log',
+            'route'  => 'admin.diarios.index',
+            'icon' => 'fas fa-clipboard-list fa-fw',
+            'can' => 'admin.diarios.index',
+        ],
+        [
+            'text' => 'Lista de operaciones',
+            'route'  => 'admin.operaciones.index',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.operaciones.index',
+        ],
+        [
+            'text' => 'Añadir operación',
+            'route'  => 'admin.operaciones.create',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'can' => 'admin.operaciones.create',
         ],
         ['header' => 'account_settings'],
         [
@@ -251,60 +314,6 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
         ],
     ],
 
