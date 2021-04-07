@@ -3,6 +3,7 @@
 @section('title', 'Usuarios')
 
 @section('content_header')
+<a class="btn btn-success btn-sm float-right" href="{{ route('admin.users.create') }}">Añadir usuario</a>
     <h1>Lista de usuarios</h1>
 @stop
 
@@ -20,7 +21,7 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Email</th>
-                        <th colspan="2"></th>
+                        <th colspan="3"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,7 @@
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                 </form>
                             </td>
+                            <
                         </tr>
                     @endforeach
                 </tbody>

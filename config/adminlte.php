@@ -15,7 +15,7 @@ return [
     */
 
     'title' => '',
-    'title_prefix' => 'Reconocedor |',
+    'title_prefix' => 'FaceRec |',
     'title_postfix' => '',
 
     /*
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Reconocedor</b>TFG',
+    'logo' => '<b>Face</b>Rec',
     'logo_img' => 'vendor/adminlte/dist/img/logo.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Reconocedor TFG',
+    'logo_img_alt' => 'FaceRec',
 
     /*
     |--------------------------------------------------------------------------
@@ -234,10 +234,13 @@ return [
             'route'  => 'dashboard',
             'icon' => 'fas fa-tachometer-alt fa-fw',
         ],
-        ['header' => 'USUARIOS'],
+        [
+            'header' => 'USUARIOS',
+            'can' => 'admin.user.index',
+        ],
         [
             'text' => 'Lista de usuarios',
-            'url'  => 'admin/settings',
+            'route'  => 'admin.users.index',
             'icon' => 'fas fa-users fa-fw',
             'can' => 'admin.user.index',
         ],
@@ -247,7 +250,10 @@ return [
             'icon' => 'fas fa-user-plus fa-fw',
             'can' => 'admin.user.create',
         ],
-        ['header' => 'ROLES/PERMISOS'],
+        [
+            'header' => 'ROLES/PERMISOS',
+            'can' => 'admin.role.index',
+        ],
         [
             'text' => 'Lista de roles',
             'route'  => 'admin.roles.index',
@@ -262,30 +268,37 @@ return [
         ],
         [
             'text' => 'Lista de permisos',
-            'route'  => 'dashboard',
+            'route'  => 'admin.permisos.index',
             'icon' => 'fas fa-users-cog fa-fw',
             'can' => 'admin.permission.index',
         ],
         [
             'text' => 'Añadir permiso',
-            'route'  => 'dashboard',
+            'route'  => 'admin.permisos.create',
             'icon' => 'fas fa-users-cog fa-fw',
             'can' => 'admin.permission.create',
         ],
-        ['header' => 'EMPLEADOS'],
+        [
+            'header' => 'EMPLEADOS',
+            'can'    => 'admin.empleados.index',
+
+        ],
         [
             'text' => 'Lista de empleados',
-            'route'  => 'admin.roles.index',
+            'route'  => 'admin.empleados.index',
             'icon' => 'fas fa-user-tie fa-fw',
             'can' => 'admin.empleados.index',
         ],
         [
             'text' => 'Añadir Empleado',
-            'route'  => 'admin.roles.create',
+            'route'  => 'admin.empleados.create',
             'icon' => 'fas fa-users-cog fa-fw',
             'can' => 'admin.empleados.create',
         ],
-        ['header' => 'ADMINISTRACIÓN'],
+        [
+            'header' => 'ADMINISTRACIÓN',
+            'can' => 'admin.diarios.index',
+        ],
         [
             'text' => 'Log',
             'route'  => 'admin.diarios.index',

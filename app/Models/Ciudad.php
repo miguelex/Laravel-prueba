@@ -9,6 +9,8 @@ class Ciudad extends Model
 {
     use HasFactory;
 
+    protected $table = 'ciudades';
+
     // Método que recuperar la provincia a la que pertenece la ciudad
     public function provincias ()
     {

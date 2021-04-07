@@ -11,6 +11,8 @@ class Situacion extends Model
 
     protected $table = 'situaciones';
 
+    protected $fillable = ['tipo'];
+
     // Método que recupera la situación del empelado
 
     public function empleados ()

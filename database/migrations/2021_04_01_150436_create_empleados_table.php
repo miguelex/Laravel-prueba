@@ -21,7 +21,7 @@ class CreateEmpleadosTable extends Migration
             $table->integer('codigoPostal');
             $table->string('direccion',100);
             $table->unsignedBigInteger('ciudad_id');
-            $table->unsignedBigInteger('cara_id');
+            $table->unsignedBigInteger('cara_id')->nullable();;
             $table->unsignedBigInteger('situacion_id');
             $table->timestamps();
 

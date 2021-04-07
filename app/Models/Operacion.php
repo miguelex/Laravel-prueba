@@ -11,6 +11,8 @@ class Operacion extends Model
 
     protected $table = 'operaciones';
 
+    protected $fillable = ['tipo'];
+
     // Metodo que recupera a los empelados que han realziado una operacion
     public function empleados ()
     {

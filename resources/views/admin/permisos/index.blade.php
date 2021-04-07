@@ -1,38 +1,40 @@
 @extends('adminlte::page')
 
-@section('title', 'Situaciones')
+@section('title', 'Permisos')
 
 @section('content_header')
-    <a class="btn btn-success btn-sm float-right" href="{{ route('admin.situaciones.create') }}">Añadir situación</a>
-    <h1>Lista de situaciones</h1>
+    <a class="btn btn-success btn-sm float-right" href="{{ route('admin.permisos.create') }}">Añadir permiso</a>
+    <h1>Lista de permisos</h1>
 @stop
 
 @section('content')
     @if (session('info'))
-    <div class="alert alert-success">
-        {{ session('info') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session('info') }}
+        </div>
     @endif
     <div class="card">
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tipo</th>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($situaciones as $situacion )
+                    @foreach ($permissions as $permission )
                         <tr>
-                            <td>{{ $situacion->id }}</td>
-                            <td>{{ $situacion->tipo }}</td>
+                            <td>{{ $permission->id }}</td>
+                            <td>{{ $permission->name }}</td>
+                            <td>{{ $permission->description }}</td>
                             <td width="10px">
-                                <a href="{{ route('admin.situaciones.edit', $situacion) }}" class="btn btn-sm btn-primary">Editar</a>
+                                <a href="{{ route('admin.permisos.edit', $permission) }}" class="btn btn-sm btn-primary">Editar</a>
                             </td>
                             <td width="10px">
-                                <form action="{{ route('admin.situaciones.destroy', $situacion) }}" method="POST">
+                                <form action="{{ route('admin.permisos.destroy', $permission) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>

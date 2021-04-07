@@ -1,34 +1,27 @@
 @extends('adminlte::page')
 
-@section('title', 'Escritorio')
+@section('title', 'Operaciones')
 
 @section('content_header')
+    <h1>Editar operacion</h1>
 @stop
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    Añadir operación
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('admin.operaciones.update',$operacion->id) }}" method="POST">
-                        @method('put')
-                        @csrf
-                        <div class="form-group">
-                          <label for="">Tipo</label>
-                          <input type="text" class="form-control" value="{{ $operacion->tipo }}" name="tipo">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Modificar</button>
-                        <a href="{{ route('admin.operaciones.index') }}" class="btn btn-danger">Cancelar</a>
-                      </form>
-                </div>
-            </div>
+    @if (session('info'))
+        <div class="alert alert-success">
+            {{ session('info') }}
+        </div>
+    @endif
+    <div class="card">
+        <div class="card-body">
+            {!! Form::model($operacione, ['route' =>['admin.operaciones.update', $operacione], 'method' => 'put']) !!}
+
+                @include('admin.operaciones.partials.form')
+                {!! Form::submit('Actualizar operacion', ['class' => 'btn btn-primary']) !!}
+
+            {!! Form::close() !!}
         </div>
     </div>
-</div>
 @stop
 
 @section('css')

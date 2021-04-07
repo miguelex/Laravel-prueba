@@ -1,22 +1,24 @@
 @extends('adminlte::page')
 
-@section('title', 'Operaciones')
+@section('title', 'Editar rol')
 
 @section('content_header')
-    <h1>Nueva operación</h1>
+    <h1>Editar empleado</h1>
 @stop
 
 @section('content')
-@if (session('info'))
+    @if (session('info'))
         <div class="alert alert-success">
             {{ session('info') }}
         </div>
     @endif
     <div class="card">
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.operaciones.store']) !!}
-                @include('admin.operaciones.partials.form')
-                {!! Form::submit('Crear operación', ['class' => 'btn btn-primary']) !!}
+            {!! Form::model($empleado, ['route' =>['admin.empleados.update', $empleado], 'method' => 'put']) !!}
+
+                @include('admin.empleados.partials.form')
+                {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+
             {!! Form::close() !!}
         </div>
     </div>

@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\SituacionController;
 use App\Http\Controllers\Admin\OperacionController;
 use App\Http\Controllers\Admin\DiarioController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EmpleadoController;
+use App\Http\Controllers\Admin\PermisosController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +37,7 @@ Route::resource('operaciones', OperacionController::class)->names('admin.operaci
 Route::resource('diarios', DiarioController::class)->only(['index'])->names('admin.diarios');
 
 Route::resource('users', UserController::class)->names('admin.users');
+
+Route::resource('empleados', EmpleadoController::class)->names('admin.empleados');
+
+Route::resource('permisos', PermisosController::class)->names('admin.permisos');

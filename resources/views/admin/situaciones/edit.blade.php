@@ -1,17 +1,24 @@
 @extends('adminlte::page')
 
-@section('title', 'Situaciones')
+@section('title', 'Operaciones')
 
 @section('content_header')
-    <h1>Nueva Situación</h1>
+    <h1>Editar operacion</h1>
 @stop
 
 @section('content')
+    @if (session('info'))
+        <div class="alert alert-success">
+            {{ session('info') }}
+        </div>
+    @endif
     <div class="card">
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.situaciones.store']) !!}
+            {!! Form::model($situacione, ['route' =>['admin.situaciones.update', $situacione], 'method' => 'put']) !!}
+
                 @include('admin.situaciones.partials.form')
-                {!! Form::submit('Crear situación', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('Actualizar situacion', ['class' => 'btn btn-primary']) !!}
+
             {!! Form::close() !!}
         </div>
     </div>

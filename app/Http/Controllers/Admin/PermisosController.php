@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Situacion;
 use Illuminate\Http\Request;
 
-class SituacionController extends Controller
+use Spatie\Permission\Models\Permission;
+
+class PermisosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class SituacionController extends Controller
      */
     public function index()
     {
-        $situaciones = Situacion::all();
-        return view('admin.situaciones.index', compact('situaciones'));
+        $permissions = Permission::all();
+
+        return view('admin.permisos.index', compact('permissions'));
     }
 
     /**
@@ -26,7 +28,7 @@ class SituacionController extends Controller
      */
     public function create()
     {
-        return view ('admin.situaciones.create');
+        return view ('admin.permisos.create');
     }
 
     /**
@@ -38,34 +40,24 @@ class SituacionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tipo' => 'required'
+            'name' => 'required',
+            'description' => 'required',
         ]);
 
-        $situacion = Situacion::create($request->all());
+        Permission::create($request->all());
 
-        return redirect()->route('admin.situaciones.index')->with('info', 'La situación se creó con éxito');
+        return redirect()->route('admin.permisos.index')->with('info', 'El permiso se creó con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
+       /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Situacion $situacione)
+    public function edit(Permission $permiso)
     {
-        return view('admin.situaciones.edit', compact('situacione'));
+        return view ('admin.permisos.edit', compact('permiso'));
     }
 
     /**
@@ -75,15 +67,16 @@ class SituacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Situacion $situacione)
+    public function update(Request $request, Permission $permiso)
     {
         $request->validate([
-            'tipo' => 'required'
+            'name' => 'required',
+            'description' => 'required',
         ]);
 
-        $situacione->update($request->all());
+        $permiso->update($request->all());
 
-        return redirect()->route('admin.situaciones.index')->with('info', 'La situacion se actualizó con éxito');
+        return redirect()->route('admin.permisos.index')->with('info', 'El permiso se actualizó con éxito');
     }
 
     /**
@@ -92,10 +85,10 @@ class SituacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Situacion $situacione)
+    public function destroy(Permission $permiso)
     {
-        $situacione->delete();
+        $permiso->delete();
 
-        return redirect()->route('admin.situaciones.index')->with('info','La operacion se eliminó con éxito.');
+        return redirect()->route('admin.permisos.index')->with('info', 'El permiso se eliminó con éxito');
     }
 }

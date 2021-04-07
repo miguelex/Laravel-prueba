@@ -21,35 +21,34 @@ class OperacionController extends Controller
 
     public function store(Request $request)
     {
-        $nuevaOperacion = new Operacion;
-        $nuevaOperacion->tipo = $request->input('tipo');
-        $nuevaOperacion->save();
-        return redirect()->route('admin.operaciones.index')->with('op.info','Operación añadida.');
+        $request->validate([
+            'tipo' => 'required'
+        ]);
+
+        Operacion::create($request->all());
+
+        return redirect()->route('admin.operaciones.index')->with('info', 'La operación se creó con éxito');
     }
 
-    public function show($id)
+    public function edit(Operacion $operacione)
     {
-        //
+        return view('admin.operaciones.edit', compact('operacione'));
     }
 
-    public function edit($id)
+    public function update(Request $request, Operacion $operacione)
     {
-        $operacion = Operacion::findOrFail($id);
-        return view('admin.operaciones.edit',compact('operacion'));
+        $request->validate([
+            'tipo' => 'required'
+        ]);
+
+        $operacione->update($request->all());
+
+        return redirect()->route('admin.operaciones.index')->with('info', 'La operacion se actualizó con éxito');
     }
 
-    public function update(Request $request, $id)
+    public function destroy(Operacion $operacione)
     {
-        $operacion = Operacion::findOrFail($id);
-        $operacion->tipo = $request->input('tipo');
-        $operacion->save();
-        return redirect()->route('admin.operaciones.index')->with('op.info','Operación modificada.');
-    }
-
-    public function destroy($id)
-    {
-        $operacion = Operacion::findOrFail($id);
-        $operacion->delete();
-        return redirect()->route('admin.operaciones.index')->with('op.info','Operación eliminada.');;
+        $operacione->delete();
+        return redirect()->route('admin.operaciones.index')->with('info','La operacion se eliminó con éxito.');
     }
 }

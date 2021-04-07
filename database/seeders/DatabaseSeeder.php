@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
                             'description' => 'Crear usuarios'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.user.edit',
                             'description' => 'Editar usuarios'])->syncRoles([$role1]);
+                            Permission::create(['name' => 'admin.user.delete',
+                            'description' => 'Borrar usuarios'])->syncRoles([$role1]);
 
         // Roles
         Permission::create(['name' => 'admin.role.index',
@@ -36,6 +38,8 @@ class DatabaseSeeder extends Seeder
                             'description' => 'Crear rol'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.role.edit',
                             'description' => 'Editar rol'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.role.delete',
+                            'description' => 'Borrar rol'])->syncRoles([$role1]);
 
         // Roles
         Permission::create(['name' => 'admin.permission.index',
@@ -44,12 +48,20 @@ class DatabaseSeeder extends Seeder
                             'description' => 'Crear permiso'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.permission.edit',
                             'description' => 'Editar permiso'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.permission.delete',
+                            'description' => 'Borrar permiso'])->syncRoles([$role1]);
 
         // Log
         Permission::create(['name' => 'admin.diarios.index',
                             'description' => 'Ver diario'])->syncRoles([$role1]);
+                            Permission::create(['name' => 'admin.operaciones.index',
+                            'description' => 'Ver listado de operaciones'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.operaciones.create',
                             'description' => 'Crear operacion'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.operaciones.edit',
+                            'description' => 'Editar operacion'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.operaciones.delete',
+                            'description' => 'Borrar operacion'])->syncRoles([$role1]);
 
         // Empleados
         Permission::create(['name' => 'admin.empleados.index',
@@ -58,5 +70,7 @@ class DatabaseSeeder extends Seeder
                             'description' => 'Crear empleado'])->syncRoles([$role2]);
         Permission::create(['name' => 'admin.empleados.edit',
                             'description' => 'Editar empleado'])->syncRoles([$role2]);
+        Permission::create(['name' => 'admin.empleados.delete',
+                            'description' => 'Borrar empleado'])->syncRoles([$role2]);
     }
 }
