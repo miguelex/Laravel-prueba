@@ -3,7 +3,7 @@
 @section('title', 'Escritorio')
 
 @section('content_header')
-    <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.roles.create') }}">Añadir rol</a>
+    <a class="btn btn-success btn-sm float-right" href="{{ route('admin.roles.create') }}">Añadir rol</a>
     <h1>Lista de roles</h1>
 @stop
 
@@ -29,7 +29,7 @@
                             <td>{{ $role->id }}</td>
                             <td>{{ $role->name }}</td>
                             <td width="10px">
-                                <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-primary">Editar</a>
+                                <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-primary">Asignar Rol</a>
                             </td>
                             <td width="10px">
                                 <form action="{{ route('admin.roles.destroy', $role) }}" method="POST">

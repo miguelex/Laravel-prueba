@@ -190,7 +190,7 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    'register_url' => false,
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
@@ -225,8 +225,8 @@ return [
 
     'menu' => [
         [
-            'text' => 'search',
-            'search' => true,
+            'text' => 'Changelog',
+            'url'  => 'changelog',
             'topnav' => true,
         ],
         [
@@ -246,7 +246,7 @@ return [
         ],
         [
             'text' => 'Añadir usuario',
-            'route'  => 'dashboard',
+            'route'  => 'admin.users.create',
             'icon' => 'fas fa-user-plus fa-fw',
             'can' => 'admin.user.create',
         ],

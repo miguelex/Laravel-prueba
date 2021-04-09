@@ -28,6 +28,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/changelog', function () {
+    return view('changelog');
+});
+
 Route::resource('roles', RoleController::class)->names('admin.roles');
 
 Route::resource('situaciones', SituacionController::class)->names('admin.situaciones');

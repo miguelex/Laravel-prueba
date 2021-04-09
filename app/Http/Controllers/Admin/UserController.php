@@ -28,7 +28,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view ('admin.users.create', compact('roles'));
     }
 
     /**
@@ -39,7 +40,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        return redirect()->route('admin.users.index')->with('info', 'El usuario se creó con éxito');
     }
 
     /**
@@ -84,8 +91,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('admin.users.index', $user)->with('info', 'Usuario eliminado correctamente');
     }
 }
