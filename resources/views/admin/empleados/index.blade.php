@@ -21,6 +21,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
+                <th>DNI/NIE</th>
                 <th>Situación</th>
                 <th>Fecha nacimiento</th>
                 <th>Ciudad</th>
@@ -35,6 +36,7 @@
                     <td>{{ $empleado->id }}</td>
                     <td>{{ $empleado->nombre }}</td>
                     <td>{{ $empleado->apellidos }}</td>
+                    <td>{{ $empleado->dni }}</td>
                     <td>{{ $empleado->tipo }}</td>
                     <td>{{ $empleado->fechaNacimiento }}</td>
                     <td>{{ $empleado->ciudadNombre }}</td>

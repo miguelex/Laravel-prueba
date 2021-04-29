@@ -69,17 +69,11 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        /**
-         * TODO Hay que trabajar la iamgen asociada al perfil
-         */
-        return 'https://picsum.photos/300/300';
+        return auth()->user()->profile_photo_path;
     }
 
     public function adminlte_desc()
     {
-        /**
-         * TODO Hay que que recoger el rol del usuario
-         */
-        return 'Administrador';
+        return auth()->user()->roles->first()->name;
     }
 }
