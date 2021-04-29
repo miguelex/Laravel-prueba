@@ -19,7 +19,7 @@ class EmpleadoResource extends JsonResource
             'nombre' => $this->nombre,
             'apellidos' => $this->apellidos,
             'dni' => $this->dni,
-            'ID Cara' => $this->cara_id,
+            'idCara' => $this->cara_id,
         ];
     }
 }
