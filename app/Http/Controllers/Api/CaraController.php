@@ -10,6 +10,12 @@ use Validator;
 
 class CaraController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum', ['only' => ['store']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

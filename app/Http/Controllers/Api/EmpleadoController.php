@@ -7,8 +7,15 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use App\Http\Resources\Api\EmpleadoResource;
 
+
 class EmpleadoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum', ['only' => ['index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
