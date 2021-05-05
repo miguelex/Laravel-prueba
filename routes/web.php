@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\DiarioController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\PermisosController;
+use App\Models\Diario;
+use App\Models\Empleado;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +23,15 @@ use App\Http\Controllers\Admin\PermisosController;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('dashboard');
+    $empleados = Empleado::count();
+    $diario = Diario::count();
+    return view('dashboard', compact('empleados', 'diario'));
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    $empleados = Empleado::count();
+    $diario = Diario::count();
+    return view('dashboard', compact('empleados', 'diario'));
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/changelog', function () {

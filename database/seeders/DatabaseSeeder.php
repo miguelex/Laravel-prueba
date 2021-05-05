@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         // Log
         Permission::create(['name' => 'admin.diarios.index',
                             'description' => 'Ver diario'])->syncRoles([$role1]);
-                            Permission::create(['name' => 'admin.operaciones.index',
+        Permission::create(['name' => 'admin.operaciones.index',
                             'description' => 'Ver listado de operaciones'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.operaciones.create',
                             'description' => 'Crear operacion'])->syncRoles([$role1]);

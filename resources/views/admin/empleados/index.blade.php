@@ -38,7 +38,17 @@
                     <td>{{ $empleado->nombre }}</td>
                     <td>{{ $empleado->apellidos }}</td>
                     <td>{{ $empleado->dni }}</td>
-                    <td>{{ $empleado->tipo }}</td>
+                    <td>
+                    @if ($empleado->tipo == "Alta")
+                        <span class="badge badge-success">
+                    @elseif ($empleado->tipo == "Baja")
+                        <span class="badge badge-danger">
+                    @elseif ($empleado->tipo == "Vacaciones")
+                        <span class="badge badge-info">
+                    @else ($empleado->tipo == "Permiso")
+                            <span class="badge badge-warning">
+                    @endif
+                    {{ $empleado->tipo }}</span></td>
                     <td>{{ $empleado->fechaNacimiento }}</td>
                     <td>{{ $empleado->ciudadNombre }}</td>
                     <td>{{ $empleado->codigoPostal }}</td>
@@ -62,6 +72,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $empleados->links() }}
 </div>
 </div>
 @stop

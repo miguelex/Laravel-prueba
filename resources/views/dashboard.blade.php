@@ -57,30 +57,30 @@
             </div>
           </div>
           <div class="col">
-            <div class="small-box bg-info">
+            <div class="small-box bg-secondary">
                 <div class="inner">
-                  <h3>150</h3>
-                  <p>Nuevos empleados</p>
+                  <h3>{{ $empleados }}</h3>
+                  <p>Empleados totales</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-user-plus"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                  More info <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{ url('empleados/') }}" class="small-box-footer">
+                  Ver empleados <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
           </div>
           <div class="col">
-            <div class="small-box bg-info">
+            <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>150</h3>
-                  <p>Entradas nuevas en el diario</p>
+                  <h3>{{ $diario }}</h3>
+                  <p>Entradas en el diario</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-copy"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                  More info <i class="fas fa-arrow-circle-right"></i>
+                <a href="{{ url('diarios/') }}" class="small-box-footer">
+                  Ir al log <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
           </div>

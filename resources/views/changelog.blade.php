@@ -8,7 +8,16 @@
 
 @section('content')
     <ul>
-        <li>Versión 05/05/2021</li>
+        <li>Versión 05/05/2021-b</li>
+        <ol>
+            <li>Añadido paginación a empleados</li>
+            <li>Código de colores para identificar rapdiamente la situación en la que esta cada empleado</li>
+            <li>Datos del Dashboard  reales - salvo los relacionados con el reconocimiento facial- </li>
+
+        </ol>
+    </ul>
+    <ul>
+        <li>Versión 05/05/2021-a</li>
         <ol>
             <li>Añadido Link a la documentación de la API</li>
             <li>Creado 100 empleados aleatoriamente</li>
@@ -21,6 +30,15 @@
         <ol>
             <li>V1 de la API activa</li>
             <li>Solucionado error dni</li>
+        </ol>
+    </ul>
+    <ul>
+        <li>Versión 25/04/2021</li>
+        <ol>
+            <li>Armonización de las vistas</li>
+            <li>Comprobación de las validaciones</li>
+            <li>Rol correcto en la tarjeta del nombre. EN caso de tener los dos roles, se meustra el prioritario</li>
+            <li>La imagen de perfil ya no es una imagen aleatoria de internet. Falta permitir la subida de la misma</li>
         </ol>
     </ul>
     <ul>

@@ -21,7 +21,7 @@ class EmpleadoController extends Controller
                             ->join ('situaciones','situaciones.id', '=','empleados.situacion_id')
                             ->join ('ciudades','ciudades.id', '=','empleados.ciudad_id')
                             ->orderBy('id', 'asc')
-                            ->get();
+                            ->paginate(10);
 
         return view('admin.empleados.index', compact('empleados'));
     }
