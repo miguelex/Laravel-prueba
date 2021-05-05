@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -72,5 +73,6 @@ class DatabaseSeeder extends Seeder
                             'description' => 'Editar empleado'])->syncRoles([$role2]);
         Permission::create(['name' => 'admin.empleados.delete',
                             'description' => 'Borrar empleado'])->syncRoles([$role2]);
-    }
+
+   }
 }

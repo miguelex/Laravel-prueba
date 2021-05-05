@@ -27,6 +27,7 @@
                 <th>Ciudad</th>
                 <th>Código postal</th>
                 <th>Direccion</th>
+                <th>Foto</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -42,6 +43,11 @@
                     <td>{{ $empleado->ciudadNombre }}</td>
                     <td>{{ $empleado->codigoPostal }}</td>
                     <td>{{ $empleado->direccion }}</td>
+                    @if ($empleado->cara_id > 0)
+                        <td><span class="badge badge-success">Si</span></td>
+                    @else
+                        <td><span class="badge badge-danger">No</span></td>
+                    @endif
                     <td width="10px">
                         <a href="{{ route('admin.empleados.edit', $empleado) }}" class="btn btn-sm btn-primary">Editar</a>
                     </td>

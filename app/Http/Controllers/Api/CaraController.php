@@ -47,29 +47,45 @@ class CaraController extends Controller
             return response()->json(['message' => $validator->errors()], 422);
         }
 
-        // Inserccion
+        // Vemos si el id existe en la bd
 
-        $cara = new Cara();
-
-        $cara->puntos = $request->input('puntos');
-
-        $res = $cara->save();
-
-        // Asociar
-
-        $idCaraInsertada = $cara->id;
         $idEmpleado = $request->input('id');
 
         $empleado = Empleado::find($idEmpleado);
-        $empleado->cara_id = $idCaraInsertada;
-        $empleado->save();
 
-        // Respuesta
+        if ($empleado != null)
+        {
+            // Inserccion
 
-        if ($res) {
-            return response()->json(['message' => 'Los puntos se han insertado correctamente'], 200);
+            $cara = new Cara();
+
+            $cara->puntos = $request->input('puntos');
+
+            $res = $cara->save();
+
+            // Asociar
+
+            $idCaraInsertada = $cara->id;
+
+            $empleado->cara_id = $idCaraInsertada;
+            $empleado->save();
+
+            // Respuesta
+
+            if ($res) {
+                return response()->json(['message' => 'Los puntos se han insertado correctamente'], 200);
+            }
+            return response()->json(['message' => 'Error insertando los puntos'], 500);
         }
-        return response()->json(['message' => 'Error insertando los puntos'], 500);
+
+        else
+        {
+            return response()->json(['message' => 'El usuario no existe'], 403);
+        }
+
+
+
+
 
     }
 

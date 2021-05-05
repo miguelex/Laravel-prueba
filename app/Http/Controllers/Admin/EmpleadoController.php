@@ -17,9 +17,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::select('empleados.id', 'empleados.nombre', 'empleados.apellidos', 'empleados.codigoPostal', 'empleados.direccion', 'empleados.fechaNacimiento', 'situaciones.tipo', 'ciudades.nombre as ciudadNombre')
+        $empleados = Empleado::select('empleados.id', 'empleados.nombre', 'empleados.apellidos', 'empleados.dni', 'empleados.codigoPostal', 'empleados.direccion', 'empleados.fechaNacimiento', 'empleados.cara_id' ,'situaciones.tipo', 'ciudades.nombre as ciudadNombre')
                             ->join ('situaciones','situaciones.id', '=','empleados.situacion_id')
                             ->join ('ciudades','ciudades.id', '=','empleados.ciudad_id')
+                            ->orderBy('id', 'asc')
                             ->get();
 
         return view('admin.empleados.index', compact('empleados'));

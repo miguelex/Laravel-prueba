@@ -8,6 +8,22 @@
 
 @section('content')
     <ul>
+        <li>Versión 05/05/2021</li>
+        <ol>
+            <li>Añadido Link a la documentación de la API</li>
+            <li>Creado 100 empleados aleatoriamente</li>
+            <li>Refactorizado código del endpoint de subir los puntos</li>
+            <li>Se añade a la vista de empleados información acerca de si el empelado tiene foto o no</li>
+        </ol>
+    </ul>
+    <ul>
+        <li>Versión 03/05/2021</li>
+        <ol>
+            <li>V1 de la API activa</li>
+            <li>Solucionado error dni</li>
+        </ol>
+    </ul>
+    <ul>
         <li>Versión 09/04/2021</li>
         <ol>
             <li>Creación del Changelog</li>
