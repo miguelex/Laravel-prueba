@@ -8,6 +8,13 @@
 
 @section('content')
     <ul>
+        <li>Versión 06/05/2021</li>
+        <ol>
+            <li>Añadido paginación a todas las vistas index</li>
+
+        </ol>
+    </ul>
+    <ul>
         <li>Versión 05/05/2021-b</li>
         <ol>
             <li>Añadido paginación a empleados</li>

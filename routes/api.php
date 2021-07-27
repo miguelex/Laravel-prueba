@@ -23,3 +23,5 @@ Route::post('/auth/logout', [AuthController::class, 'logout']);
 Route::apiResource('empleados', App\Http\Controllers\Api\EmpleadoController::class);
 
 Route::apiResource('caras', App\Http\Controllers\Api\CaraController::class);
+
+Route::apiResource('modelos', App\Http\Controllers\Api\ModeloController::class);

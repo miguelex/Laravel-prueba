@@ -42,6 +42,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $situaciones->links() }}
         </div>
     </div>
 @stop

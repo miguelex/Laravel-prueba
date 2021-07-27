@@ -42,6 +42,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $roles->links() }}
         </div>
     </div>
 @stop

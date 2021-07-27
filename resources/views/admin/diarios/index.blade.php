@@ -31,6 +31,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $diarios->links() }}
         </div>
     </div>
 @stop

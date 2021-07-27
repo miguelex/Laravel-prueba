@@ -10,7 +10,7 @@ class OperacionController extends Controller
 {
     public function index()
     {
-        $operaciones = Operacion::all();
+        $operaciones = Operacion::paginate(10);
         return view('admin.operaciones.index', compact('operaciones'));
     }
 

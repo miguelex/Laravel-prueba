@@ -3,7 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-class CreateCarasTable extends Migration
+use Illuminate\Support\Facades\DB;
+
+class AñadirBlobModelos extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +14,7 @@ class CreateCarasTable extends Migration
      */
     public function up()
     {
-        Schema::create('caras', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        DB::statement("ALTER TABLE modelos ADD archivo MEDIUMBLOB");
     }
 
     /**
@@ -25,6 +24,6 @@ class CreateCarasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caras');
+        //
     }
 }

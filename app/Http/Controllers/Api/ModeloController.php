@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cara;
-use App\Models\Empleado;
+use App\Models\Modelo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CaraController extends Controller
+class ModeloController extends Controller
 {
 
     public function __construct()
@@ -34,12 +33,11 @@ class CaraController extends Controller
      */
     public function store(Request $request)
     {
-
         // Validacion
 
         $validator = Validator::make($request->all(), [
             'id' => 'required',
-            'imagen' => 'required'
+            'archivo' => 'required'
         ]);
 
         if($validator->fails()){
@@ -47,56 +45,32 @@ class CaraController extends Controller
             return response()->json(['message' => $validator->errors()], 422);
         }
 
-        // Vemos si el id existe en la bd
+        // Insertar
 
-        $idEmpleado = $request->input('id');
+        $file = $request->file('archivo');
 
-        $empleado = Empleado::find($idEmpleado);
+        // Get the contents of the file
+        $contents = $file->openFile()->fread($file->getSize());
 
-        if ($empleado != null)
-        {
-            $file = $request->file('imagen');
+        $modelo = new Modelo();
+        $modelo->archivo = $contents;
+        $res = $modelo->save();
 
-            // Get the contents of the file
-            $contents = $file->openFile()->fread($file->getSize());
+        // Respuesta
 
-            $cara = new Cara();
-            $cara->imagen = $contents;
-            $res = $cara->save();
-
-            // Asociar
-
-            $idCaraInsertada = $cara->id;
-
-            $empleado->cara_id = $idCaraInsertada;
-            $empleado->save();
-
-            // Respuesta
-
-            if ($res) {
-                return response()->json(['message' => 'La imagen se han insertado correctamente'], 200);
-            }
-            return response()->json(['message' => 'Error insertando la imagen'], 500);
+        if ($res) {
+            return response()->json(['message' => 'El modelo se han insertado correctamente'], 200);
         }
-
-        else
-        {
-            return response()->json(['message' => 'El usuario no existe'], 403);
-        }
-
-
-
-
-
+        return response()->json(['message' => 'Error insertando el modelo'], 500);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cara  $cara
+     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function show(Cara $cara)
+    public function show(Modelo $modelo)
     {
         //
     }
@@ -105,10 +79,10 @@ class CaraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cara  $cara
+     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cara $cara)
+    public function update(Request $request, Modelo $modelo)
     {
         //
     }
@@ -116,10 +90,10 @@ class CaraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cara  $cara
+     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cara $cara)
+    public function destroy(Modelo $modelo)
     {
         //
     }

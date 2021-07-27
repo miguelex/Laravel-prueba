@@ -3,7 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-class CreateCarasTable extends Migration
+use Illuminate\Support\Facades\DB;
+
+class CreateModelosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +14,11 @@ class CreateCarasTable extends Migration
      */
     public function up()
     {
-        Schema::create('caras', function (Blueprint $table) {
+        Schema::create('modelos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+
         });
     }
 
@@ -25,6 +29,6 @@ class CreateCarasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caras');
+        Schema::dropIfExists('modelos');
     }
 }

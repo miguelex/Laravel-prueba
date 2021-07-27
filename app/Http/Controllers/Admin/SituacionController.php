@@ -15,7 +15,7 @@ class SituacionController extends Controller
      */
     public function index()
     {
-        $situaciones = Situacion::all();
+        $situaciones = Situacion::paginate(10);
         return view('admin.situaciones.index', compact('situaciones'));
     }
 
