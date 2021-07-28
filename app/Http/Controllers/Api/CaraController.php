@@ -55,13 +55,13 @@ class CaraController extends Controller
 
         if ($empleado != null)
         {
-            $file = $request->file('imagen');
+            //$file = $request->file('imagen');
 
             // Get the contents of the file
-            $contents = $file->openFile()->fread($file->getSize());
+            //$contents = $file->openFile()->fread($file->getSize());
 
             $cara = new Cara();
-            $cara->imagen = $contents;
+            $cara->imagen = $request->input('imagen');
             $res = $cara->save();
 
             // Asociar
