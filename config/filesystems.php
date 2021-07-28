@@ -52,6 +52,11 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'local2' => [
+            'driver' => 'local',
+            'root' => storage_path('app/fotos'),
+        ],
+
     ],
 
     /*

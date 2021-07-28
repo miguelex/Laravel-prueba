@@ -7,6 +7,7 @@ use App\Models\Cara;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class CaraController extends Controller
 {
@@ -55,11 +56,19 @@ class CaraController extends Controller
 
         if ($empleado != null)
         {
-            //$file = $request->file('imagen');
+            //Base64 a imagen
+            $image = $request->imagen;  // your base64 encoded
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $now = new \DateTime();
+            $imageName = $empleado->id .'_'.$now->format('d-m-Y').'.png';
 
-            // Get the contents of the file
-            //$contents = $file->openFile()->fread($file->getSize());
+            $dir = $empleado->id;
 
+
+            Storage::disk('local2')->put($dir.'/'.$imageName, base64_decode($image));
+
+            //Guardar cara
             $cara = new Cara();
             $cara->imagen = $request->input('imagen');
             $res = $cara->save();
@@ -83,10 +92,6 @@ class CaraController extends Controller
         {
             return response()->json(['message' => 'El usuario no existe'], 403);
         }
-
-
-
-
 
     }
 

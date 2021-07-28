@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Modelo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ModeloController extends Controller
 {
@@ -36,7 +37,6 @@ class ModeloController extends Controller
         // Validacion
 
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
             'archivo' => 'required'
         ]);
 
@@ -47,13 +47,8 @@ class ModeloController extends Controller
 
         // Insertar
 
-        $file = $request->file('archivo');
-
-        // Get the contents of the file
-        $contents = $file->openFile()->fread($file->getSize());
-
         $modelo = new Modelo();
-        $modelo->archivo = $contents;
+        $modelo->archivo = $request->input('archivo');
         $res = $modelo->save();
 
         // Respuesta
