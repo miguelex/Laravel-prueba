@@ -25,3 +25,7 @@ Route::apiResource('empleados', App\Http\Controllers\Api\EmpleadoController::cla
 Route::apiResource('caras', App\Http\Controllers\Api\CaraController::class);
 
 Route::apiResource('modelos', App\Http\Controllers\Api\ModeloController::class);
+
+Route::get('/vermodelo/{fecha}', [App\Http\Controllers\Api\ModeloController::class, 'ModeloReciente']);
+
+Route::get('/nuevascaras/{fechainicio}/{fechafin}', [App\Http\Controllers\Api\CaraController::class, 'CarasReciente']);

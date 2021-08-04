@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Api\CaraResource;
 
 class CaraController extends Controller
 {
@@ -17,15 +18,23 @@ class CaraController extends Controller
         $this->middleware('auth:sanctum', ['only' => ['store']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    public function convert_from_latin1_to_utf8_recursively($dat)
+   {
+      if (is_string($dat)) {
+         return utf8_encode($dat);
+      } elseif (is_array($dat)) {
+         $ret = [];
+         foreach ($dat as $i => $d) $ret[ $i ] = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $ret;
+      } elseif (is_object($dat)) {
+         foreach ($dat as $i => $d) $dat->$i = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $dat;
+      } else {
+         return $dat;
+      }
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -60,6 +69,7 @@ class CaraController extends Controller
             $image = $request->imagen;  // your base64 encoded
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
+
             $now = new \DateTime();
             $imageName = $empleado->id .'_'.$now->format('d-m-Y').'.png';
 
@@ -98,34 +108,35 @@ class CaraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cara  $cara
+     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
-    public function show(Cara $cara)
+    public function show($fecha)
     {
-        //
+        $dt = date(\DateTime::ISO8601,$fecha/1000);
+
+        return CaraResource::collection(Cara::where('updated_at', '<=', $dt)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cara  $cara
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cara $cara)
+    public function CarasReciente($fechaInicio, $fechaFin)
     {
-        //
+        $dtStart = date(\DateTime::ISO8601,$fechaInicio/1000);
+        $dtEnd = date(\DateTime::ISO8601,$fechaFin/1000);
+
+        if ($dtEnd <= $dtStart)
+        {
+            $aux = $dtStart;
+            $dtStart = $dtEnd;
+            $dtEnd = $aux;
+        }
+
+
+        $caras = Empleado::where('updated_at', '>=', $dtStart)->where('updated_at', '<=', $dtEnd)->get()->count();
+
+        return response()->json(['Fecha Inicio' => $dtStart,
+                                 'Fecha Fin' => $dtEnd,
+                                 'Contador' => $caras], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cara  $cara
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cara $cara)
-    {
-        //
-    }
+
 }
