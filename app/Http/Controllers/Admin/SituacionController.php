@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Situacion;
 use Illuminate\Http\Request;
+use DataTables;
 
 class SituacionController extends Controller
 {
@@ -15,8 +16,7 @@ class SituacionController extends Controller
      */
     public function index()
     {
-        $situaciones = Situacion::paginate(10);
-        return view('admin.situaciones.index', compact('situaciones'));
+        return view('admin.situaciones.index');
     }
 
     /**
@@ -97,5 +97,21 @@ class SituacionController extends Controller
         $situacione->delete();
 
         return redirect()->route('admin.situaciones.index')->with('info','La operacion se eliminó con éxito.');
+    }
+
+    // Metodo que usaremos en la llamada Ajax desde la vista
+    public function getSituaciones(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Situacion::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Editar</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Borrar</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

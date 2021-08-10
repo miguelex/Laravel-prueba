@@ -51,3 +51,7 @@ Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('empleados', EmpleadoController::class)->names('admin.empleados');
 
 Route::resource('permisos', PermisosController::class)->names('admin.permisos');
+
+Route::get('operacion/list', [OperacionController::class, 'getOperaciones'])->name('operacion.list');
+Route::get('situacion/list', [SituacionController::class, 'getSituaciones'])->name('situacion.list');
+

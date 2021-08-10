@@ -17,5 +17,4 @@ class DiarioController extends Controller
 
         return view('admin.diarios.index', compact('diarios'));
     }
-
 }
