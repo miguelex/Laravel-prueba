@@ -113,29 +113,17 @@ class CaraController extends Controller
      */
     public function show($fecha)
     {
+        /* Me devuelve todos los empleados y sus fragemntos que tengan fecha de actualizacion mayor o igual a la pasada por
+        la url */
+
         $dt = date(\DateTime::ISO8601,$fecha/1000);
 
-        return CaraResource::collection(Cara::where('updated_at', '<=', $dt)->get());
-    }
-
-    public function CarasReciente($fechaInicio, $fechaFin)
-    {
-        $dtStart = date(\DateTime::ISO8601,$fechaInicio/1000);
-        $dtEnd = date(\DateTime::ISO8601,$fechaFin/1000);
-
-        if ($dtEnd <= $dtStart)
-        {
-            $aux = $dtStart;
-            $dtStart = $dtEnd;
-            $dtEnd = $aux;
-        }
-
-
-        $caras = Empleado::where('updated_at', '>=', $dtStart)->where('updated_at', '<=', $dtEnd)->get()->count();
-
-        return response()->json(['Fecha Inicio' => $dtStart,
-                                 'Fecha Fin' => $dtEnd,
-                                 'Contador' => $caras], 200);
+        return CaraResource::collection(Empleado::select("empleados.id",
+                                                          "caras.imagen as fragmento"
+                                                  )
+                                                  ->join("caras", "caras.id", "=", "empleados.cara_id")
+                                                  ->where('empleados.updated_at', '>=', $dt)
+                                                  ->get());
     }
 
 

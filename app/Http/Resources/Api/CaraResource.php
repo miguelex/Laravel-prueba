@@ -16,8 +16,7 @@ class CaraResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'imagen' => $this->imagen,
-            'creacion' => $this->created_at,
+            'fragmento' => $this->fragmento,
         ];
 
     }
