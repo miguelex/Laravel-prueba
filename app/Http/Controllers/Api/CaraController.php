@@ -80,7 +80,7 @@ class CaraController extends Controller
 
             //Guardar cara
             $cara = new Cara();
-            $cara->imagen = $request->input('imagen');
+            $cara->imagen = $request->input('fragmento');
             $res = $cara->save();
 
             // Asociar
