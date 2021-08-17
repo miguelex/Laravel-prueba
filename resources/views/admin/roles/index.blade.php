@@ -3,6 +3,7 @@
 @section('title', 'Escritorio')
 
 @section('content_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <a class="btn btn-success btn-sm float-right" href="{{ route('admin.roles.create') }}">Añadir rol</a>
     <h1>Lista de roles</h1>
 @stop
@@ -15,70 +16,73 @@
     @endif
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped" id="roles">
+            <table class="table table-striped roles">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Role</th>
-                        <th colspan="2"></th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $role )
-                        <tr>
-                            <td>{{ $role->id }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td width="10px">
-                                <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-primary">Editar</a>
-                            </td>
-                            <td width="10px">
-                                <form action="{{ route('admin.roles.destroy', $role) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
-            {{ $roles->links() }}
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
-@endsection
+@stop
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#roles').DataTable({
-                responsive: true,
-                autoWidth: false,
-                "language": {
-                    "lengthMenu": "Ver _MENU_ registros por página",
-                    "zeroRecords": "No se encuentra ningún registro",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "No existen registros disponibles",
-                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                    'search': "Buscar:",
-                    'paginate' : {
-                        'next': "Siguiente",
-                        'previous': "Anterior"
-                    }
+        $(function () {
 
+          var table = $('.roles').DataTable({
+            responsive: true,
+            autoWidth: false,
+            processing: true,
+            serverSide: true,
+            "language": {
+                "lengthMenu": "Ver _MENU_ registros por página",
+                "zeroRecords": "No se encuentra ningún registro",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No existen registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                'search': "Buscar:",
+                'paginate' : {
+                    'next': "Siguiente",
+                    'previous': "Anterior"
                 }
-            });
-        } );
-    </script>
-@endsection
+
+            },
+
+            ajax: "{{ route('role.list') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+          });
+
+        });
+      </script>
+@stop
+
 

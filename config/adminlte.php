@@ -224,16 +224,7 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'Changelog',
-            'url'  => 'changelog',
-            'topnav' => true,
-        ],
-        [
-            'text' => 'Documentación API',
-            'url'  => 'https://documenter.getpostman.com/view/4076084/TzRNFpkQ',
-            'topnav' => true,
-        ],
+
         [
             'text' => 'Dashboard',
             'route'  => 'dashboard',

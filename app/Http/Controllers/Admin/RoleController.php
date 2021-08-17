@@ -8,6 +8,8 @@ use Spatie\Permission\Models\Role;
 
 use Spatie\Permission\Models\Permission;
 
+use DataTables;
+
 class RoleController extends Controller
 {
     /**
@@ -17,9 +19,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(10);
-
-        return view ('admin.roles.index',compact('roles'));
+        return view ('admin.roles.index');
     }
 
     /**
@@ -110,5 +110,21 @@ class RoleController extends Controller
         return redirect()->route('admin.roles.index')->with('info', 'El rol se eliminó con éxito');
 
 
+    }
+
+    // Metodo que usaremos en la llamada Ajax desde la vista
+    public function getRoles(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Role::select('id', 'name')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Editar</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Borrar</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

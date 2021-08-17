@@ -3,6 +3,7 @@
 @section('title', 'Usuarios')
 
 @section('content_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <a class="btn btn-success btn-sm float-right" href="{{ route('admin.users.create') }}">Añadir usuario</a>
     <h1>Lista de usuarios</h1>
 @stop
@@ -15,52 +16,73 @@
     @endif
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped" id="usuarios">
+            <table class="table table-striped usuarios">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Id</th>
                         <th>Nombre</th>
-                        <th>Email</th>
-                        <th colspan="3"></th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user )
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td width="10px">
-                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-primary">Editar</a>
-                            </td>
-                            <td width="10px">
-                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
-            {{ $users->links() }}
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-@endsection
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+@stop
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#usuarios').DataTable();
-        } );
-    </script>
-@endsection
+        $(function () {
+
+          var table = $('.usuarios').DataTable({
+            responsive: true,
+            autoWidth: false,
+            processing: true,
+            serverSide: true,
+            "language": {
+                "lengthMenu": "Ver _MENU_ registros por página",
+                "zeroRecords": "No se encuentra ningún registro",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No existen registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                'search': "Buscar:",
+                'paginate' : {
+                    'next': "Siguiente",
+                    'previous': "Anterior"
+                }
+
+            },
+
+            ajax: "{{ route('usuario.list') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+          });
+
+        });
+      </script>
+@stop

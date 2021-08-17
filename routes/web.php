@@ -54,4 +54,9 @@ Route::resource('permisos', PermisosController::class)->names('admin.permisos');
 
 Route::get('operacion/list', [OperacionController::class, 'getOperaciones'])->name('operacion.list');
 Route::get('situacion/list', [SituacionController::class, 'getSituaciones'])->name('situacion.list');
+Route::get('permiso/list', [PermisosController::class, 'getPermisos'])->name('permiso.list');
+Route::get('role/list', [RoleController::class, 'getRoles'])->name('role.list');
+Route::get('usuario/list', [UserController::class, 'getUsuarios'])->name('usuario.list');
+Route::get('empleado/list', [EmpleadoController::class, 'getEmpleados'])->name('empleado.list');
+Route::get('diario/list', [DiarioController::class, 'getDiarios'])->name('diario.list');
 

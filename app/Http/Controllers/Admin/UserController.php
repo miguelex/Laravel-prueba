@@ -8,6 +8,8 @@ use App\Models\User;
 
 use Spatie\Permission\Models\Role;
 
+use DataTables;
+
 class UserController extends Controller
 {
     /**
@@ -17,8 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
-        return view ('admin.users.index', compact('users'));
+        return view ('admin.users.index');
     }
 
     /**
@@ -95,5 +96,21 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.users.index', $user)->with('info', 'Usuario eliminado correctamente');
+    }
+
+    // Metodo que usaremos en la llamada Ajax desde la vista
+    public function getUsuarios(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::select('id', 'name', 'email')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Editar</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Borrar</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }
