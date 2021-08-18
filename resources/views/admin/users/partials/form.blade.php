@@ -15,20 +15,22 @@
         @endif
     </div>
 </div>
-{!! Form::label('name', 'Correo electrónico') !!}
-<div class="input-group mb-3">
-    <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-           value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
-    <div class="input-group-append">
-        <div class="input-group-text">
-            <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+<div class="form-group">
+    {!! Form::label('name', 'Correo electrónico') !!}
+    <div class="input-group mb-3">
+        <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+            value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+            </div>
         </div>
+        @if($errors->has('email'))
+            <div class="invalid-feedback">
+                <strong>{{ $errors->first('email') }}</strong>
+            </div>
+        @endif
     </div>
-    @if($errors->has('email'))
-        <div class="invalid-feedback">
-            <strong>{{ $errors->first('email') }}</strong>
-        </div>
-    @endif
 </div>
 <div class="form-group">
     {!! Form::label('name', 'Password') !!}

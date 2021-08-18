@@ -6,6 +6,8 @@
             {{ $message }}<br>
         </small>
     @enderror
+</div>
+<div class="form-group">
     {!! Form::label('name', 'Descripción') !!}
     {!! Form::text('description', null, ['class' =>'form-control', 'placeholder' => 'Introduzca la descripción del permiso']) !!}
     @error('description')
