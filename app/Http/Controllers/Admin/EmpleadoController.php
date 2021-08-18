@@ -44,6 +44,7 @@ class EmpleadoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'apellidos' => 'required',
+            'dni' => 'required',
             'fecha' => 'required',
             'codigoPostal' => 'required',
             'ciudad' => 'required',
@@ -54,6 +55,7 @@ class EmpleadoController extends Controller
         $nuevoEmpleado = new Empleado;
         $nuevoEmpleado->nombre = $request->input('nombre');
         $nuevoEmpleado->apellidos = $request->input('apellidos');
+        $nuevoEmpleado->dni = $request->input('dni');
         $nuevoEmpleado->fechaNacimiento = $request->input('fecha');
         $nuevoEmpleado->codigoPostal = $request->input('codigoPostal');
         $nuevoEmpleado->ciudad_id = $request->input('ciudad');
@@ -74,6 +76,7 @@ class EmpleadoController extends Controller
     {
         $empleado->nombre = $request->input('nombre');
         $empleado->apellidos = $request->input('apellidos');
+        $empleado->dni = $request->input('dni');
         $empleado->fechaNacimiento = $request->input('fecha');
         $empleado->codigoPostal = $request->input('codigoPostal');
         $empleado->ciudad_id = $request->input('ciudad');
