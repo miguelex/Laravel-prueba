@@ -70,13 +70,12 @@ class CaraController extends Controller
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
 
-            $now = new \DateTime();
-            $imageName = $empleado->id .'_'.$now->format('d-m-Y').'.png';
+            $imageName = $empleado->id .'.png';
 
             $dir = $empleado->id;
 
 
-            Storage::disk('local2')->put($dir.'/'.$imageName, base64_decode($image));
+            Storage::disk('public')->put($dir.'/'.$imageName, base64_decode($image));
 
             //Guardar cara
             $cara = new Cara();

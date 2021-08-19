@@ -8,7 +8,9 @@ use App\Models\Empleado;
 use App\Models\Ciudad;
 use App\Models\Situacion;
 
-use DataTables;
+use Illuminate\Support\Facades\Storage;
+
+//use DataTables;
 class EmpleadoController extends Controller
 {
     /**
@@ -18,7 +20,14 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        return view('admin.empleados.index');
+        //return view('admin.empleados.index');
+        $empleados = Empleado::select('empleados.id', 'empleados.nombre', 'empleados.apellidos', 'empleados.dni', 'empleados.codigoPostal', 'empleados.direccion', 'empleados.fechaNacimiento', 'empleados.cara_id' ,'situaciones.tipo', 'ciudades.nombre as ciudadNombre')
+                            ->join ('situaciones','situaciones.id', '=','empleados.situacion_id')
+                            ->join ('ciudades','ciudades.id', '=','empleados.ciudad_id')
+                            ->orderBy('id', 'asc')
+                            ->paginate(10);
+
+        return view('admin.empleados.index', compact('empleados'));
     }
 
     /**
@@ -86,13 +95,22 @@ class EmpleadoController extends Controller
         return redirect()->route('admin.empleados.index')->with('info','Empleado modificada.');
     }
 
+    public function show(Empleado $empleado)
+    {
+        $id = $empleado->id;
+        $nombre = $empleado->nombre;
+        $apellidos = $empleado->apellidos;
+
+        return view('admin.empleados.show', compact('id','nombre','apellidos'));
+    }
+
     public function destroy(Empleado $empleado)
     {
         $empleado->delete();
         return redirect()->route('admin.empleados.index')->with('info','Empleado eliminado.');;
     }
 
-    // Metodo que usaremos en la llamada Ajax desde la vista
+   /* // Metodo que usaremos en la llamada Ajax desde la vista
     public function getEmpleados(Request $request)
     {
         if ($request->ajax()) {
@@ -111,5 +129,5 @@ class EmpleadoController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    }
+    }*/
 }

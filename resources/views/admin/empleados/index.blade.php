@@ -3,126 +3,92 @@
 @section('title', 'Empleados')
 
 @section('content_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <a class="btn btn-success btn-sm float-right" href="{{ route('admin.empleados.create') }}">Añadir empleado</a>
     <h1>Lista de empleados</h1>
 @stop
 
 @section('content')
-    @if (session('info'))
-    <div class="alert alert-success">
-        {{ session('info') }}
-    </div>
-    @endif
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-striped empleados">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>DNI/NIE</th>
-                        <th>Direccion</th>
-                        <th>Ciudad</th>
-                        <th>Código Postal</th>
-                        <th>Cara</th>
-                        <th>Situación</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
+@if (session('info'))
+<div class="alert alert-success">
+    {{ session('info') }}
+</div>
+@endif
+<div class="card">
+<div class="card-body">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI/NIE</th>
+                <th>Direccion</th>
+                <th>Ciudad</th>
+                <th>Código postal</th>
+                <th>Foto</th>
+                <th>Situación</th>
+                <th colspan="3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($empleados as $empleado )
+                <tr>
+                    <td>{{ $empleado->id }}</td>
+                    <td>{{ $empleado->nombre }}</td>
+                    <td>{{ $empleado->apellidos }}</td>
+                    <td>{{ $empleado->dni }}</td>
+                    <td>{{ $empleado->direccion }}</td>
+                    <td>{{ $empleado->ciudadNombre }}</td>
+                    <td>{{ $empleado->codigoPostal }}</td>
+                    @if ($empleado->cara_id > 0)
+                        <td><span class="badge badge-success">Si</span></td>
+                    @else
+                        <td><span class="badge badge-danger">No</span></td>
+                    @endif
+                    <td>
+                    @if ($empleado->tipo == "Alta")
+                        <span class="badge badge-success">
+                    @elseif ($empleado->tipo == "Baja")
+                        <span class="badge badge-danger">
+                    @elseif ($empleado->tipo == "Vacaciones")
+                        <span class="badge badge-info">
+                    @else ($empleado->tipo == "Permiso")
+                            <span class="badge badge-warning">
+                    @endif
+                    {{ $empleado->tipo }}</span></td>
+                    <td width="10px">
+                        <a href="{{ route('admin.empleados.edit', $empleado) }}" class="btn btn-sm btn-primary">Editar</a>
+                    </td>
+                    <td width="10px">
+                        <form action="{{ route('admin.empleados.destroy', $empleado) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                    @if ($empleado->cara_id > 0)
+                        <td width="10px">
+                            <a href="{{ route('admin.empleados.show', $empleado) }}" class="btn btn-sm btn-success">Foto</a>
+                        </td>
+                    @else
+                    <td width="10px">
+                        <a href="#" class="btn btn-sm btn-light">Vacio</a>
+                    </td>
+                    @endif
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    {{ $empleados->links() }}
+</div>
+
+
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
-    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
-    <script>
-        $(function () {
-
-          var table = $('.empleados').DataTable({
-            responsive: true,
-            autoWidth: false,
-            processing: true,
-            serverSide: true,
-            "language": {
-                "lengthMenu": "Ver _MENU_ registros por página",
-                "zeroRecords": "No se encuentra ningún registro",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No existen registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                'search': "Buscar:",
-                'paginate' : {
-                    'next': "Siguiente",
-                    'previous': "Anterior"
-                }
-
-            },
-
-            ajax: "{{ route('empleado.list') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'nombre', name: 'nombre'},
-                {data: 'apellidos', name: 'apellidos'},
-                {data: 'dni', name: 'dni'},
-                {data: 'direccion', name: 'direccion'},
-                {data: 'city', name: 'city'},
-                {data: 'codigoPostal', name: 'codigoPostal'},
-                {data: 'cara', name: 'cara', render: function(data, type, row){
-                    face='';
-                    if (data == null){
-                        face = '<span class="badge badge-danger">'+"No"+'</span>';
-                    }
-                    else {
-                        face = '<span class="badge badge-success">'+"Si"+'</span>';
-                    }
-
-                    return face;
-                }},
-                {data: 'situacion', name: 'situacion', render: function(data, type, row){
-                  sev='';
-                  switch (data){
-                    case "Alta":
-                        sev = '<span class="badge badge-success badge-pill">'+data+'</span>';
-                        break;
-                    case "Baja":
-                        sev = '<span class="badge badge-danger badge-pill">'+data+'</span>';
-                        break;
-                    case "Vacaciones":
-                        sev = '<span class="badge badge-info badge-pill">'+data+'</span>';
-                        break;
-                    case "Permiso":
-                        sev = '<span class="badge badge-warning badge-pill">'+data+'</span>';
-                        break;
-
-                  }
-                  return sev;
-                }},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ]
-          });
-
-        });
-      </script>
+    <script> console.log('Hi!'); </script>
 @stop

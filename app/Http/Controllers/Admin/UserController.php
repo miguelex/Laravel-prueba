@@ -43,9 +43,15 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed'
         ]);
+
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password= bcrypt($request->input('password'));
+        $user->save();
 
         return redirect()->route('admin.users.index')->with('info', 'El usuario se creó con éxito');
     }
