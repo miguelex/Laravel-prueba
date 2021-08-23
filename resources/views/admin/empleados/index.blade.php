@@ -68,11 +68,14 @@
                     </td>
                     @if ($empleado->cara_id > 0)
                         <td width="10px">
-                            <a href="{{ route('admin.empleados.show', $empleado) }}" class="btn btn-sm btn-success">Foto</a>
+                            <a href="{{ route('admin.empleados.show', $empleado) }}" class="btn btn-sm btn-success">Foto</a>                        </td>
+                            <!--
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#yourModal{{$empleado->id}}">Foto</button>
+                            -->
                         </td>
                     @else
                     <td width="10px">
-                        <a href="#" class="btn btn-sm btn-light">Vacio</a>
+                        <button type="button" class="btn btn-sm btn-success" disabled>Foto</button>
                     </td>
                     @endif
                 </tr>
@@ -82,7 +85,27 @@
     {{ $empleados->links() }}
 </div>
 
+@foreach ($empleados as $empleado)
+    <div class="modal fade text-left" id="yourModal{{$empleado->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ $empleado->nombre }} {{ $empleado->apellidos }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img id="image" src="{{ asset('storage/'.$empleado->id.'/'.$empleado->cara_id.'.png') }}" alt="{{ $empleado->nombre }} {{ $empleado->apellidos }}" title="{{ $empleado->nombre }} {{ $empleado->apellidos }}" />
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 @stop
 
 @section('css')
@@ -90,5 +113,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Api\CaraResource;
+use Image;
+
 
 class CaraController extends Controller
 {
@@ -18,7 +20,7 @@ class CaraController extends Controller
         $this->middleware('auth:sanctum', ['only' => ['store']]);
     }
 
-    public function convert_from_latin1_to_utf8_recursively($dat)
+    /*public function convert_from_latin1_to_utf8_recursively($dat)
    {
       if (is_string($dat)) {
          return utf8_encode($dat);
@@ -34,7 +36,7 @@ class CaraController extends Controller
       } else {
          return $dat;
       }
-   }
+   }*/
 
     /**
      * Store a newly created resource in storage.
@@ -70,24 +72,43 @@ class CaraController extends Controller
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
 
-            $imageName = $empleado->id .'.png';
-
-            $dir = $empleado->id;
-
-
-            Storage::disk('public')->put($dir.'/'.$imageName, base64_decode($image));
-
             //Guardar cara
             $cara = new Cara();
             $cara->imagen = $request->input('fragmento');
             $res = $cara->save();
 
-            // Asociar
-
             $idCaraInsertada = $cara->id;
+            $dir = $empleado->id; // Nombre de directorio (id del empleado)
+
+            // En primer lugar, si previamente teniamo en Storage una foto, la borro
+
+            if ($empleado->cara_id > 0)
+            {
+                Storage::disk('public')->delete($dir.'/'.$empleado->cara_id.'.png');
+            }
+
+            // Asociar
 
             $empleado->cara_id = $idCaraInsertada;
             $empleado->save();
+
+            // Guardar imagen original en Storage
+
+            $imageName = $idCaraInsertada .'.png'; //Nombre del fichero
+
+            Storage::disk('public')->put($dir.'/original/'.$imageName, base64_decode($image));
+
+            // Guardar imagen modificada en Storage
+
+            $image_resize = Image::make($request->imagen);
+            $image_resize->resize(800, null, function($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $image_resize->orientate();
+            $image_resize->encode('png');
+            Storage::disk('public')->put($dir.'/modificado/'.$imageName, $image_resize);
 
             // Respuesta
 

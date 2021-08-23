@@ -7,8 +7,8 @@
           <div class="col">
             <div class="small-box bg-gradient-warning">
                 <div class="inner">
-                  <h3>150</h3>
-                  <p>Intentos de reconocimiento fallidos</p>
+                  <h3>{{ $users }}</h3>
+                  <p>Usuarios en el sistema</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-exclamation-triangle"></i>

@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Ciudad;
 use App\Models\Situacion;
 
+
 use Illuminate\Support\Facades\Storage;
 
 //use DataTables;
@@ -39,6 +40,7 @@ class EmpleadoController extends Controller
     {
         $ciudades = Ciudad::all()->pluck('nombre','id');
         $situaciones = Situacion::all()->pluck('tipo','id');
+
         return view('admin.empleados.create', compact('ciudades','situaciones'));
     }
 
@@ -56,6 +58,7 @@ class EmpleadoController extends Controller
             'dni' => 'required',
             'fecha' => 'required',
             'codigoPostal' => 'required',
+            'provincia' => 'required',
             'ciudad' => 'required',
             'direccion' => 'required',
             'situacion' => 'required',
@@ -78,6 +81,7 @@ class EmpleadoController extends Controller
     {
         $ciudades = Ciudad::all()->pluck('nombre','id');
         $situaciones = Situacion::all()->pluck('tipo','id');
+
         return view('admin.empleados.edit',compact('empleado','ciudades','situaciones'));
     }
 
@@ -97,11 +101,14 @@ class EmpleadoController extends Controller
 
     public function show(Empleado $empleado)
     {
+        $empleado = Empleado::find($empleado->id);
+
         $id = $empleado->id;
         $nombre = $empleado->nombre;
         $apellidos = $empleado->apellidos;
+        $ruta = asset('storage/'.$id.'/'.$empleado->cara_id.'.png');
 
-        return view('admin.empleados.show', compact('id','nombre','apellidos'));
+        return view('admin.empleados.show', compact('id','nombre','apellidos', 'ruta'));
     }
 
     public function destroy(Empleado $empleado)

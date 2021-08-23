@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\PermisosController;
 use App\Models\Diario;
 use App\Models\Empleado;
+use App\Models\User;
+
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +27,16 @@ use App\Models\Empleado;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     $empleados = Empleado::count();
+    $users = User::count();
     $diario = Diario::count();
-    return view('dashboard', compact('empleados', 'diario'));
+    return view('dashboard', compact('empleados', 'diario', 'users'));
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $empleados = Empleado::count();
+    $users = User::count();
     $diario = Diario::count();
-    return view('dashboard', compact('empleados', 'diario'));
+    return view('dashboard', compact('empleados', 'diario', 'users'));
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/changelog', function () {
@@ -60,3 +65,8 @@ Route::get('usuario/list', [UserController::class, 'getUsuarios'])->name('usuari
 Route::get('empleado/list', [EmpleadoController::class, 'getEmpleados'])->name('empleado.list');
 Route::get('diario/list', [DiarioController::class, 'getDiarios'])->name('diario.list');
 
+// Esta ruta de aqui abajo se usa para crear el enlace simbolico con la carpeta Storage en el servidor compartido
+Route::get('fotos', function(){
+    File::link(
+        storage_path('app/public'), public_path('storage'));
+});

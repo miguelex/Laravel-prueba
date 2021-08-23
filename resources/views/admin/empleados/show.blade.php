@@ -10,7 +10,7 @@
 
 <div class="card">
     <div class="card-body">
-        <img src="{{ url('storage/'.$id.'/'.$id.'.png') }}" alt="" title="" />
+        <img src="{{ $ruta }}" class="img-fluid" alt="{{ $nombre }} {{ $apellidos }}" title="{{ $nombre }} {{ $apellidos }}" />
     </div>
 </div>
 
