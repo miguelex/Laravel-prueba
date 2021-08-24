@@ -106,7 +106,7 @@ class EmpleadoController extends Controller
         $id = $empleado->id;
         $nombre = $empleado->nombre;
         $apellidos = $empleado->apellidos;
-        $ruta = asset('storage/'.$id.'/'.$empleado->cara_id.'.png');
+        $ruta = asset('storage/'.$id.'/modificado/'.$empleado->cara_id.'.png');
 
         return view('admin.empleados.show', compact('id','nombre','apellidos', 'ruta'));
     }

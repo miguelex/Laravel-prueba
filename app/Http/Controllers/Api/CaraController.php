@@ -47,44 +47,47 @@ class CaraController extends Controller
     public function store(Request $request)
     {
 
-        // Validacion
+        // Validación para comprobar que hemos mandado todos los campos en la respuesta
 
         $validator = Validator::make($request->all(), [
             'id' => 'required',
-            'imagen' => 'required'
+            'imagen' => 'required',
+            'fragmento' => 'required'
         ]);
 
+        // Devuelvo error si no pasa la validación
         if($validator->fails()){
             //return $this->error($validator->errors(),412);
             return response()->json(['message' => $validator->errors()], 422);
         }
 
-        // Vemos si el id existe en la bd
+        // Vemos si el empleado existe en la bd
 
         $idEmpleado = $request->input('id');
 
         $empleado = Empleado::find($idEmpleado);
 
-        if ($empleado != null)
+        if ($empleado != null) // Existe
         {
             //Base64 a imagen
             $image = $request->imagen;  // your base64 encoded
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
 
-            //Guardar cara
+            //Guardar el fragmento
             $cara = new Cara();
             $cara->imagen = $request->input('fragmento');
             $res = $cara->save();
 
-            $idCaraInsertada = $cara->id;
+            $idCaraInsertada = $cara->id; // El id del fragmento que hemos insertado (nos hace falta para el nombre del archivo)
             $dir = $empleado->id; // Nombre de directorio (id del empleado)
 
-            // En primer lugar, si previamente teniamo en Storage una foto, la borro
+            // En primer lugar, si previamente teniamos en Storage una foto, la borro
 
             if ($empleado->cara_id > 0)
             {
-                Storage::disk('public')->delete($dir.'/'.$empleado->cara_id.'.png');
+                Storage::disk('public')->delete($dir.'/original/'.$empleado->cara_id.'.png');
+                Storage::disk('public')->delete($dir.'/modificado/'.$empleado->cara_id.'.png');
             }
 
             // Asociar
@@ -115,10 +118,11 @@ class CaraController extends Controller
             if ($res) {
                 return response()->json(['message' => 'La imagen se han insertado correctamente'], 200);
             }
+
             return response()->json(['message' => 'Error insertando la imagen'], 500);
         }
 
-        else
+        else // No existe
         {
             return response()->json(['message' => 'El usuario no existe'], 403);
         }

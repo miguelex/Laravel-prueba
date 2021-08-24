@@ -68,10 +68,7 @@
                     </td>
                     @if ($empleado->cara_id > 0)
                         <td width="10px">
-                            <a href="{{ route('admin.empleados.show', $empleado) }}" class="btn btn-sm btn-success">Foto</a>                        </td>
-                            <!--
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#yourModal{{$empleado->id}}">Foto</button>
-                            -->
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" id="smallButton" data-target="#smallModal" data-attr="{{ route('admin.empleados.show', $empleado) }}">Foto</button>
                         </td>
                     @else
                     <td width="10px">
@@ -85,33 +82,59 @@
     {{ $empleados->links() }}
 </div>
 
-@foreach ($empleados as $empleado)
-    <div class="modal fade text-left" id="yourModal{{$empleado->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">{{ $empleado->nombre }} {{ $empleado->apellidos }}</h4>
+                <div class="modal-header bg-primary">
+                    <h3 class="modal-title">Fotografía actual</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <img id="image" src="{{ asset('storage/'.$empleado->id.'/'.$empleado->cara_id.'.png') }}" alt="{{ $empleado->nombre }} {{ $empleado->apellidos }}" title="{{ $empleado->nombre }} {{ $empleado->apellidos }}" />
-
+                <div class="modal-body" id="smallBody">
+                    <div>
+                        <!-- the result to be displayed apply here -->
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
-@endforeach
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
-
+    <script>
+        $(document).on('click', '#smallButton', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(result) {
+                    console.log(result);
+                    $('#smallModal').modal("show");
+                    $('#smallBody').html(result).show();
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    $('#loader').hide();
+                },
+                timeout: 8000
+            })
+        });
+    </script>
 @stop
